@@ -1,53 +1,5 @@
-×Close
-Interested in translating the app in your language ? Click here
-×Close
-Found a bug in the app ?
-Click here to report it on the community
- Logo
-File
-Open
-Favorites
-Options
 
-tweet_sentiment_tennant.py
- Saved
- 
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
+
 import sys
 import json
 from pprint import pprint
