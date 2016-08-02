@@ -63,23 +63,6 @@ def main():
 	    	
 		
 		
-		
-                # averaging moodscore of word already in my_scores
-                elif word in my_scores and mood!=0:
-		    mood = (my_scores[word].count*my_scores[word].mood+mood)/(my_scores[word].count+1)
-		    count = word.count+1
-		    my_scores = (word, mood, count)
-		
-		#else statement taking the words without a mood associated
-                #with them and averaging the score of the surrounding
-		#words and giving that score to the unknown word
-		else:
-                    #print word + ' ' + str(mood) 
-                    my_scores = (word, mood, count+1) 
-	    #print one_tweet + ': mood ' + str(mood)
-            
-            #prints the mood score of each tweet to the screen
-            #print str(mood) 
 
 if __name__ == '__main__':
     main()
