@@ -13,7 +13,7 @@ def main():
     tweet_file = open(sys.argv[2])
     hw()
     class sentiment_scores:
-        def _init_(self, mood, count):
+        def __init__(self, mood, count):
 		self.mood = mood
 		self.count = count	
     lines(sent_file)
@@ -28,7 +28,7 @@ def main():
     for line in afinnfile:
 	# the file is tab delimited "\t" means tab character
         term, score = line.split("\t") 
-        scores[term] = sentiment_scores(float(score), 1) # convert score to an integer
+        scores[term] = sentiment_scores(float(score), 1) # convert score to an float
         
     #open output.txt and put it new_tweet_file
     new_tweet_file = open("output.txt")	
@@ -55,14 +55,16 @@ def main():
 	    for word in words:
 	    	if word not in scores:
 		    if word not in my_scores:
-		        my_scores[word]=sentiment_scores(mood, 1)     
+		        my_scores[word]=sentiment_scores(float(mood), 1)     
 		
 		    else:
-		        my_scores[word].mood= (my_scores[word].count*my_scores[word].mood+mood)/(my_scores[word].count+1)
+		        my_scores[word].mood= float((my_scores[word].count*my_scores[word].mood+mood)/(my_scores[word].count+1))
 			my_scores[word].count +=1
 	    	
 		
-		
-
+	
+    for x in my_scores:
+        print x, '  ' , my_scores[x].mood #, 'count',  my_scores[x].count	
+   
 if __name__ == '__main__':
     main()
