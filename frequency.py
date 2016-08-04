@@ -5,18 +5,18 @@ from pprint import pprint
 
 def hw():
 
-    #print "hello world!"
+    print "hello world!"
 
 
 def main():
-
+    tweet_file = open(sys.argv[1])
     hw()
     
     wordcount = {}     #initializes empty dictionary
     wordcount1 = {}    #initializes dictionary to add new words
     total = 1
     #open output.txt and put it new_tweet_file
-    new_tweet_file = open("output.txt")	
+    new_tweet_file = tweet_file	
 
     #pull the text of the tweets out
     for line in new_tweet_file:
@@ -44,26 +44,16 @@ def main():
                     frequency = 0
                     frequency = 1 + wordcount[word]
                     wordcount[word] = 1.00*frequency/total
-                    #wordcount1 = {word: frequency}
-                    #print word + ' ' + str(frequency)
-                    #print wordcount
+                    
                 else:
                     wordcount[word] = 1.*1/total
 
                 total = len(wordcount)
-                #print total	
-              
-                           
-           # for word in wordcount:
-            #    if wordcount[word] < 2:
-             #       placeholder = 0
-              #  else:
-               #     print wordcount 
-			
-    #print wordcount
+	
+    
 
     for word in wordcount:
-        print word,       wordcount[word]
+        print word,  '    ',     wordcount[word]
  
   
 if __name__ == '__main__':
