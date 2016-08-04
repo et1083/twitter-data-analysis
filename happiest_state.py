@@ -15,43 +15,7 @@ def main():
     lines(sent_file)
     lines(tweet_file)
     
-    afinnfile = open("AFINN-111.txt")
-    scores = {} # initialize an empty dictionary
-    states = {}  #initializes dictionary of states
-    for line in afinnfile:
-# the file is tab delimited "\t" means tab chracter
-        term, score = line.split("\t") 
-        scores[term] = int(score) # convert score to an integer
-
- #open output.txt and put it new_tweet_file
-    new_tweet_file = open("US_tweets.txt")	
-  
-#for loop for each line(tweet) in new_tweet_file
-    for line in new_tweet_file:
-        tweet = json.loads(line)   
-        if 'text' in tweet:
-            #print tweet['text'].encode('ascii', 'ignore')			    	
-            
-	    if 'location' in tweet:                                 
-                print tweet['location'].encode('ascii', 'ignore')
-	        
-		#print('mytweet ' + tweet['text'].encode('ascii', 'ignore'))	  
-                #prints mytweet then the text associated with the 'text' key  
-                #.encode makes the unicode work
-
-                #one_tweet holds 1 tweet at a time
-                one_tweet = tweet['text'].encode('ascii', 'ignore')   
-            
-                words = one_tweet.split()    #this will break the tweet into words    
-                mood = 0
-                for word in words:    #scores each word in the tweet and adds it up
-                    if word in scores:  
-                        #print word
-                        mood = mood + scores[word]
-                
-   
-   
-   
+    
     states = {
         'AK': 'Alaska',
         'AL': 'Alabama',
@@ -110,7 +74,60 @@ def main():
         'WI': 'Wisconsin',
         'WV': 'West Virginia',
         'WY': 'Wyoming'
-}                
+}                 
+    afinnfile = open("AFINN-111.txt")
+    scores = {} # initialize an empty dictionary
+    state_mood = {}
+    for line in afinnfile:
+# the file is tab delimited "\t" means tab chracter
+        term, score = line.split("\t") 
+        scores[term] = int(score) # convert score to an integer
+
+    for x in states:
+        state_mood[x] = float(0)    
+    
+ #open output.txt and put it new_tweet_file
+    new_tweet_file = open("US_tweets.txt")	
+  
+#for loop for each line(tweet) in new_tweet_file
+    for line in new_tweet_file:
+        tweet = json.loads(line)   
+        
+       
+	if 'user' in tweet:                                 
+            if 'location' in tweet['user']:
+		if tweet['user']['location'] is not None:
+		    locale = tweet['user']['location'].encode('UTF8')
+		        
+		    places = locale.split() 
+                    
+		    for term in places:
+			    
+		        if term in states:
+			    if 'text' in tweet:
+			        one_tweet = tweet['text'].encode('ascii', 'ignore')   
+              
+                                words = one_tweet.split()    #this will break the tweet into words    
+                                mood = 0
+                                for word in words:    #scores each word in the tweet and adds it up
+                                    if word in scores:  
+                          
+                                        mood = mood + scores[word]
+			    
+			   
+                                state_mood[term] = mood                               
+				
+                                
+   
+   
+    
+    count = 0
+    for term in sorted(state_mood, key=state_mood.get, reverse=True):
+        
+	if count < 1:
+            print 'the happiest state is', term, 'with a mood of',  state_mood[term] 
+	    count +=1  
+    
 
 if __name__ == '__main__':
     main()
