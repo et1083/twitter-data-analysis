@@ -12,27 +12,33 @@ def main():
     tweet_file = open(sys.argv[1])
     hw()
     
-    lines(tweet_file)
-     
-    #open output.txt and put it new_tweet_file
-    new_tweet_file = open("output.txt")	
-  
-    #for loop for each line(tweet) in new_tweet_file
-    for line in new_tweet_file:
-        tweet = json.loads(line)   #this makes a json type thing named tweets
-        if 'hashtags' in tweet:	   #looks for the key 'text' in the tweets file 	
-                                 #'text' points toward the text of the tweet          
-            print 'a'
-	    #info = json.loads(tweet['entities'])
-	    #print '# ',  tweet['entities']  #.encode('ascii', 'ignore'))	  
-            #prints mytweet then the text associated with the 'text' key  
-            #.encode makes the unicode work
-
-            #one_tweet holds 1 tweet at a time
-            #one_tweet = tweet['text'].encode('ascii', 'ignore')   
+    #lines(tweet_file)
+    hashtag = {}
+    
+    
+    #for loop for each line(tweet) in tweet_file
+    for line in tweet_file:
+        
+	tweet = json.loads(line)   #this makes a json type thing named tweets
+        if 'entities' in tweet:
+	        
+	    all_hashtag = tweet['entities']['hashtags'] 
+	    
+	    for tag in all_hashtag:
+	       y = str(tag['text'].encode('ascii', 'ignore'))  
+	       
+	       if y in hashtag:
+	           hashtag[y] += 1
+               else:
+	           hashtag[y] = 1
+	       
             
-            #words = one_tweet.split()    #this will break the tweet into words    
-           
+    mount = 0 
+    for tag in sorted(hashtag, key=hashtag.get, reverse=True):
+        
+	if mount < 11:
+	    print tag, hashtag[tag]  
+	    mount +=1     
 			
    
 if __name__ == '__main__':
