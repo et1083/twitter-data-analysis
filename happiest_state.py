@@ -75,9 +75,13 @@ def main():
         'WV': 'West Virginia',
         'WY': 'Wyoming'
 }                 
-    afinnfile = open("AFINN-111.txt")
+    #afinnfile = open("AFINN-111.txt")
+    
+    afinnfile = sent_file 
+    
     scores = {} # initialize an empty dictionary
     state_mood = {}
+    
     for line in afinnfile:
 # the file is tab delimited "\t" means tab chracter
         term, score = line.split("\t") 
@@ -87,7 +91,8 @@ def main():
         state_mood[x] = float(0)    
     
  #open output.txt and put it new_tweet_file
-    new_tweet_file = open("US_tweets.txt")	
+    new_tweet_file = tweet_file
+    #new_tweet_file = open("US_tweets.txt")	
   
 #for loop for each line(tweet) in new_tweet_file
     for line in new_tweet_file:
